@@ -15,5 +15,13 @@ body, html, #root
 
 #app
   @include flex-column  (flex-start, center)
-  height: 100vh
+  min-height: 100vh
   position: relative
+
+
+.hide-mobile
+  @include breakpoint-up (medium)
+    display: none
+.hide-desktop
+  @include breakpoint-down (small)
+    display: none

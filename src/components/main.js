@@ -2,13 +2,13 @@ import '../styles/css/App.css';
 
 const ThemeToggleComponent = (props) => {
   return (
-    <button className= {`main__btn ${props.mode}`} onClick={props.toggle}>
+    <button className= {`main__btn btn ${props.mode}`} onClick={props.toggle}>
     </button>
   )
 }
 
 
-const TodoInputComponent = (props) => {
+const TaskInputComponent = (props) => {
   return (
     <div className="main__input">
       <div className="main__input-checkBox"></div>
@@ -24,6 +24,72 @@ const TodoInputComponent = (props) => {
   )
 }
 
+
+const TaskSortComponent = (props) => {
+  return (
+    <div className= {`main__sortList ${props.className}`}>
+      <ul>
+        <li onClick={props.viewAll}>All</li>
+        <li onClick={props.viewActive}>Active</li>
+        <li onClick={props.viewCompleted}>Completed</li>
+      </ul>
+    </div>
+  );
+}
+
+const TaskControlComponent = (props) => {
+  const value = props.value > 1 
+        ? `${props.value} items left`
+        : `${props.value} item left`;
+
+  return (
+    <div className="main__task-controls">
+      <div className="main__task-items-left">
+        {value}
+      </div>
+
+    <TaskSortComponent
+      className={"hide-desktop"}
+      viewAll={props.viewAll}
+      viewACtive={props.viewACtive}
+      viewCompleted={props.viewCompleted} />
+
+      <button
+        className="main__task-clear-completed--btn btn"
+        onClick={props.clearCompleted}>
+        Clear Completed
+      </button>
+    </div>
+  );
+}
+
+
+const TaskList = (props) => {
+  const view = props.view;
+  const tasks = props.tasks;
+  const task = task =>
+    <div id={task.id} className="main__task-item">
+      <div className="main__task-checkBox"></div>
+      <h3 className="main__task-title">{task.content}</h3>
+    </div>;
+
+  return (
+    <section className="main__task">
+      {
+        view === "all" ? tasks.map (task)
+      : view === "active" ? tasks.filter (task => task.done === false).map (task)
+      : tasks.filter (task => task.done === true).map (task)
+      }
+
+      <TaskControlComponent
+        viewAll={props.viewAll}
+        viewACtive={props.viewACtive}
+        viewCompleted={props.viewCompleted}
+        value={tasks.filter (t => t.done === false).length}
+        clearCompleted={props.clearCompleted}/>
+    </section>
+  )
+}
 
 const Main = (props) => {
   return (
@@ -41,12 +107,26 @@ const Main = (props) => {
         </div>
 
         <div>
-          <TodoInputComponent
+          <TaskInputComponent
             onChangeInput={props.onChangeInput}
             inputText={props.inputText} />
         </div>
       </section>
       {/* Section End */}
+      <TaskList
+        view={props.view}
+        tasks={props.tasks}
+        viewAll={props.viewAll}
+        viewACtive={props.viewACtive}
+        viewCompleted={props.viewCompleted}/>
+
+
+      <TaskSortComponent
+        className={"hide-mobile"}
+        viewAll={props.viewAll}
+        viewACtive={props.viewACtive}
+        viewCompleted={props.viewCompleted} />
+
 
     </main>
   )

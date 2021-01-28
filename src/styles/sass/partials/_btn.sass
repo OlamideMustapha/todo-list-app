@@ -1,0 +1,40 @@
+.btn
+  outline: none
+  cursor: pointer
+  background-color: transparent
+  border: none
+  &.main__btn
+    height: 5.5vw
+    width: 5.5vw
+    background-size: cover
+
+    @include breakpoint-up (medium)
+      height: 2.5vw
+      width: 2.5vw
+
+  &.main__task-clear-completed--btn
+    font-size: 10px
+
+
+.light
+  .main
+    &__btn
+      background-image: url("../../assets/images/icon-moon.svg")
+      background-color: transparent
+
+    &__task-clear-completed--btn
+      color: $darkGrayishBlue_light
+      background-color: transparent
+      &:hover
+        color: $veryDarkGrayishBlue_light
+.dark
+  .main
+    &__btn
+      background-image: url("../../assets/images/icon-sun.svg")
+      background-color: transparent
+
+    &__task-clear-completed--btn
+      color: $veryDarkGrayishBlue_light
+      background-color: transparent
+      &:hover
+        color: $lightGrayishBlue_dark1

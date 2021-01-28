@@ -1,3 +1,35 @@
+@mixin taskComponentStyle ()
+  @include flex-row (flex-start,center)
+  padding: 3vw 5vw
+  border-radius: 1.5vw
+
+  @include breakpoint-up (medium)
+    padding: 1.5vw 2.5vw
+    border-radius: 0.5vw
+
+@mixin taskCheckBoxStyle ()
+  width: $input-checkBox-size
+  height: $input-checkBox-size
+  margin-right: 4vw
+  border-radius: 100px
+  border: solid 1px $input-checkBox-border-color
+
+  @include breakpoint-up (medium)
+    width: 2.5vw
+    height: 2.5vw
+    margin-right: 2vw
+
+@mixin taskTitleStyle ()
+  width: 100%
+  font-size: 3.5vw
+  font-weight: 400
+  border: none
+  outline: none
+  background-color: transparent
+
+  @include breakpoint-up (medium)
+    font-size: 1.5vw
+
 .main
   position: absolute
   top: 0
@@ -17,47 +49,75 @@
 
     @include breakpoint-up (medium)
       font-size: 3vw
-  &__btn
-    outline: none
-    background-color: transparent
-    border: none
-    height: 5.5vw
-    width: 5.5vw
-    background-size: cover
-
-    @include breakpoint-up (medium)
-      height: 2.5vw
-      width: 2.5vw
+ 
   &__input
-    @include flex-row (flex-start,center)
-    background-color: $veryLightGray
-    padding: 3vw 5vw
-    border-radius: 1.5vw
-
+    @include taskComponentStyle
+    margin-bottom: 4.5vw
     @include breakpoint-up (medium)
-      padding: 1.5vw 2.5vw
-      border-radius: 0.6vw
-    &-checkBox
-      width: $input-checkBox-size
-      height: $input-checkBox-size
-      margin-right: 4vw
-      border-radius: 100px
-      border: solid 1px $input-checkBox-border-color
+      margin-bottom: 2.3vw
 
-      @include breakpoint-up (medium)
-        width: 2.5vw
-        height: 2.5vw
-        margin-right: 2vw
+    &-checkBox
+      @include taskCheckBoxStyle
     &-label
       width: 80%
     &-component
+      @include taskTitleStyle
+  &__task
+    @include flex-column (center, stretch)
+    border-radius: 5px
+    &-item
+      @include taskComponentStyle
+      border-radius: 0
+      @include breakpoint-up (medium)
+        border-radius: 0
+      &:first-child
+        border-top-right-radius: 1.5vw
+        border-top-left-radius: 1.5vw
+        @include breakpoint-up (medium)
+          border-top-right-radius: 0.5vw
+          border-top-left-radius: 0.5vw
+    
+    &-checkBox
+      @include taskCheckBoxStyle
+      &:hover
+        border: solid 1px $brightBlue
+    &-title
+      @include taskTitleStyle
+      width: 80%
+    &-controls
+      @include taskComponentStyle ()
+      justify-content: space-between
+      font-size: 10px
+      border-radius: 0
+      border-bottom-right-radius: 1.5vw
+      border-bottom-left-radius: 1.5vw
+      @include breakpoint-up (medium)
+        border-radius: 0
+        border-bottom-right-radius: 0.5vw    
+        border-bottom-left-radius: 0.5vw 
+        font-size: 1.3vw
+    &-items-left
+    
+  &__sortList
+    @include breakpoint-down (small)
       width: 100%
-      border: none
-      outline: none
-      background-color: transparent
+      margin-top: 30px
+      padding: 3vw 5vw
+      border-radius: 1.5vw
 
-      @include breakpoint-up (large)
-        font-size: 1.8vw
+
+    ul
+      list-style: none
+      @include flex-row (space-around, center)
+      @include breakpoint-up(medium)
+      padding: 0px
+      margin: 0px
+      li
+        cursor: pointer      
+        &:not(:last-child)
+          @include breakpoint-up(medium)
+            margin-right: 1.8vw
+
 
 .container
   width: 100%
@@ -65,4 +125,4 @@
   padding: 5vw
 
   @include breakpoint-up (medium)
-    width: 55%
+    width: 52%

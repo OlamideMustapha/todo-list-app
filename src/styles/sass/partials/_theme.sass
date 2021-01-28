@@ -1,35 +1,88 @@
+@mixin task-bg-color ($mode)
+  @if $mode == "light"
+    background-color: $veryLightGray
+  @else if $mode == "dark"
+    background-color: $veryDarkDesaturatedBlue
+
+@mixin task-color ($mode)
+  @if $mode == "light"
+    color: $veryDarkGrayishBlue_light
+  @else if $mode == "dark"
+    color: $lightGrayishBlue_dark1
+
+@mixin controls-color ($mode)
+  @if $mode == "light"
+    color: $darkGrayishBlue_light
+  @else if $mode == "dark"
+    color: $veryDarkGrayishBlue_light
+
+
+
 .light
   background-color: $veryLightGray
-  .header
-    &__background
-      background-image: url("../../assets/images/bg-mobile-light.jpg")
-
-      @include breakpoint-up (medium)
-        background-image: url("../../assets/images/bg-desktop-light.jpg")
   .main
-    &__btn
-      background-image: url("../../assets/images/icon-moon.svg")
     &__input
-      background-color: $veryLightGray
+      @include task-bg-color (light)
       &-checkBox
         border: solid 1px $input-checkBox-border-color
       &-component
-        color: $veryDarkGrayishBlue
+        @include task-color (light)
+    &__task
+      box-shadow: 1px 3px 20px 0px #9e9a9a5c
+      &-item
+        @include task-bg-color (light)
+        &:not(:last-child)
+          border-bottom: solid 1px $veryLightGrayishBlue
+      &-checkBox
+        border: solid 1px $input-checkBox-border-color
+      &-title
+        @include task-color (light)
+
+      &-controls
+        @include task-bg-color (light)
+      &-items-left
+        @include controls-color (light)
+
+    &__sortList
+      ul
+        li
+          @include controls-color (light)
+          &:hover
+            @include task-color (light)
+      
+
 
 .dark
   background-color: $veryDarkBlue
-  .header
-    &__background
-      background-image: url("../../assets/images/bg-mobile-dark.jpg")
-
-      @include breakpoint-up (medium)
-        background-image: url("../../assets/images/bg-desktop-dark.jpg")
   .main
-    &__btn
-      background-image: url("../../assets/images/icon-sun.svg")
     &__input
-      background-color: $veryDarkDesaturatedBlue
+      @include task-bg-color (dark)
       &-checkBox
-        border: solid 1px $veryDarkGrayishBlue
+        border: solid 1px $veryDarkGrayishBlue_dark1
       &-component
-        color: $veryLightGrayishBlue
+        @include task-color (dark)
+
+    &__task
+      box-shadow: 1px 3px 20px 0px #0f1015
+      &-item
+        @include task-bg-color (dark)
+        &:not(:last-child)
+          border-bottom: solid 1px $veryDarkGrayishBlue_dark2
+      &-checkBox
+        border: solid 1px $veryDarkGrayishBlue_dark1
+      &-title
+        @include task-color (dark)
+
+      &-controls
+        @include task-bg-color (dark)
+
+      &-items-left
+        @include controls-color (dark)
+
+    &__sortList
+      ul
+        li
+          @include controls-color (dark)
+          &:hover
+            @include task-color (dark)
+        

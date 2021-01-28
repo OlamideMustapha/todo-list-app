@@ -1,7 +1,7 @@
 .header
   width: 100vw
   height: 55vw
-  
+
   @include breakpoint-up (medium)
     height: 23vw
   &__background
@@ -9,3 +9,22 @@
     background-size: cover
     background-repeat: no-repeat
     background-position: center top
+
+
+
+.light
+  .header
+    &__background
+      background-image: url("../../assets/images/bg-mobile-light.jpg")
+
+      @include breakpoint-up (medium)
+        background-image: url("../../assets/images/bg-desktop-light.jpg")
+
+
+.dark
+  .header
+    &__background
+      background-image: url("../../assets/images/bg-mobile-dark.jpg")
+
+      @include breakpoint-up (medium)
+        background-image: url("../../assets/images/bg-desktop-dark.jpg")
