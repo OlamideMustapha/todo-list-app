@@ -1,0 +1,193 @@
+/* breakpoints */
+/* flex box rules */
+body, html, #root {
+  padding: 0;
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 18px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  transition: all 1s ease-in-out;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  position: relative;
+}
+
+.light {
+  background-color: #fafafa;
+}
+.light .header__background {
+  background-image: url("../../assets/images/bg-mobile-light.jpg");
+}
+@media (min-width: 640px) {
+  .light .header__background {
+    background-image: url("../../assets/images/bg-desktop-light.jpg");
+  }
+}
+.light .main__btn {
+  background-image: url("../../assets/images/icon-moon.svg");
+}
+.light .main__input {
+  background-color: #fafafa;
+}
+.light .main__input-checkBox {
+  border: solid 1px #e4e5f1;
+}
+.light .main__input-component {
+  color: #393a4c;
+}
+
+.dark {
+  background-color: #161722;
+}
+.dark .header__background {
+  background-image: url("../../assets/images/bg-mobile-dark.jpg");
+}
+@media (min-width: 640px) {
+  .dark .header__background {
+    background-image: url("../../assets/images/bg-desktop-dark.jpg");
+  }
+}
+.dark .main__btn {
+  background-image: url("../../assets/images/icon-sun.svg");
+}
+.dark .main__input {
+  background-color: #25273c;
+}
+.dark .main__input-checkBox {
+  border: solid 1px #393a4c;
+}
+.dark .main__input-component {
+  color: #e4e5f1;
+}
+
+.header {
+  width: 100vw;
+  height: 55vw;
+}
+@media (min-width: 640px) {
+  .header {
+    height: 23vw;
+  }
+}
+.header__background {
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+.main {
+  position: absolute;
+  top: 0;
+}
+.main__header {
+  display: flex;
+  flex-direction: column;
+  align-items: felx-start;
+  justify-content: space-between;
+}
+.main__title-toggle--wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10vw 0 8vw 0;
+}
+@media (min-width: 640px) {
+  .main__title-toggle--wrapper {
+    padding: 0 0 3vw 0;
+  }
+}
+.main__title {
+  color: white;
+  font-size: 7vw;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+@media (min-width: 640px) {
+  .main__title {
+    font-size: 3vw;
+  }
+}
+.main__btn {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  height: 5.5vw;
+  width: 5.5vw;
+  background-size: cover;
+}
+@media (min-width: 640px) {
+  .main__btn {
+    height: 2.5vw;
+    width: 2.5vw;
+  }
+}
+.main__input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #fafafa;
+  padding: 3vw 5vw;
+  border-radius: 1.5vw;
+}
+@media (min-width: 640px) {
+  .main__input {
+    padding: 1.5vw 2.5vw;
+    border-radius: 0.6vw;
+  }
+}
+.main__input-checkBox {
+  width: 6vw;
+  height: 6vw;
+  margin-right: 4vw;
+  border-radius: 100px;
+  border: solid 1px #e4e5f1;
+}
+@media (min-width: 640px) {
+  .main__input-checkBox {
+    width: 2.5vw;
+    height: 2.5vw;
+    margin-right: 2vw;
+  }
+}
+.main__input-label {
+  width: 80%;
+}
+.main__input-component {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+@media (min-width: 1024px) {
+  .main__input-component {
+    font-size: 1.8vw;
+  }
+}
+
+.container {
+  width: 100%;
+  margin: auto;
+  padding: 5vw;
+}
+@media (min-width: 640px) {
+  .container {
+    width: 55%;
+  }
+}
+
+/*# sourceMappingURL=App.css.map */

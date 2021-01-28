@@ -1,0 +1,35 @@
+.light
+  background-color: $veryLightGray
+  .header
+    &__background
+      background-image: url("../../assets/images/bg-mobile-light.jpg")
+
+      @include breakpoint-up (medium)
+        background-image: url("../../assets/images/bg-desktop-light.jpg")
+  .main
+    &__btn
+      background-image: url("../../assets/images/icon-moon.svg")
+    &__input
+      background-color: $veryLightGray
+      &-checkBox
+        border: solid 1px $input-checkBox-border-color
+      &-component
+        color: $veryDarkGrayishBlue
+
+.dark
+  background-color: $veryDarkBlue
+  .header
+    &__background
+      background-image: url("../../assets/images/bg-mobile-dark.jpg")
+
+      @include breakpoint-up (medium)
+        background-image: url("../../assets/images/bg-desktop-dark.jpg")
+  .main
+    &__btn
+      background-image: url("../../assets/images/icon-sun.svg")
+    &__input
+      background-color: $veryDarkDesaturatedBlue
+      &-checkBox
+        border: solid 1px $veryDarkGrayishBlue
+      &-component
+        color: $veryLightGrayishBlue
