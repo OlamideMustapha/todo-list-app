@@ -1,88 +1,104 @@
-@mixin task-bg-color ($mode)
-  @if $mode == "light"
-    background-color: $veryLightGray
-  @else if $mode == "dark"
-    background-color: $veryDarkDesaturatedBlue
-
-@mixin task-color ($mode)
-  @if $mode == "light"
-    color: $veryDarkGrayishBlue_light
-  @else if $mode == "dark"
-    color: $lightGrayishBlue_dark1
-
-@mixin controls-color ($mode)
-  @if $mode == "light"
-    color: $darkGrayishBlue_light
-  @else if $mode == "dark"
-    color: $veryDarkGrayishBlue_light
-
-
-
+$scroll-bar_light: $darkGrayishBlue_light
+$scroll-bar_dark: $veryDarkGrayishBlue_dark2
+  
 .light
   background-color: $veryLightGray
+  @include scroll_bar (1vw, $scroll-bar_light)
+
+  @include breakpoint-up (medium)
+    @include scroll_bar (.4vw, $scroll-bar_light)
+
   .main
     &__input
       @include task-bg-color (light)
-      &-checkBox
-        border: solid 1px $input-checkBox-border-color
       &-component
         @include task-color (light)
     &__task
-      box-shadow: 1px 3px 20px 0px #9e9a9a5c
+      box-shadow: $component-box-shadow-light
+
+
       &-item
         @include task-bg-color (light)
         &:not(:last-child)
           border-bottom: solid 1px $veryLightGrayishBlue
-      &-checkBox
-        border: solid 1px $input-checkBox-border-color
+        &.done
+          .main__task-title
+            color: $lightGrayishBlue_light
+      
       &-title
         @include task-color (light)
-
       &-controls
         @include task-bg-color (light)
       &-items-left
         @include controls-color (light)
 
+
+
     &__sortList
+      @include task-bg-color (light)
+      &.hide-desktop
+        box-shadow: $component-box-shadow-light
       ul
         li
           @include controls-color (light)
           &:hover
             @include task-color (light)
-      
+
+    &__instruction
+      @include controls-color (light)
+
+    .emptyList
+      @include task-bg-color (light)
+      @include controls-color (light)
+      border-bottom: solid 1px $veryLightGrayishBlue
+    
+
+
 
 
 .dark
   background-color: $veryDarkBlue
+  @include scroll_bar (1vw, $scroll-bar_dark)
+
+  @include breakpoint-up (medium)
+    @include scroll_bar (.4vw, $scroll-bar_dark)
+    
   .main
     &__input
       @include task-bg-color (dark)
-      &-checkBox
-        border: solid 1px $veryDarkGrayishBlue_dark1
       &-component
         @include task-color (dark)
 
     &__task
-      box-shadow: 1px 3px 20px 0px #0f1015
+      box-shadow: $component-box-shadow-dark
       &-item
         @include task-bg-color (dark)
         &:not(:last-child)
           border-bottom: solid 1px $veryDarkGrayishBlue_dark2
-      &-checkBox
-        border: solid 1px $veryDarkGrayishBlue_dark1
+        &.done
+          .main__task-title
+            color: $veryDarkGrayishBlue_dark2
+          
       &-title
         @include task-color (dark)
-
       &-controls
         @include task-bg-color (dark)
-
       &-items-left
         @include controls-color (dark)
 
     &__sortList
+      @include task-bg-color (dark)
+      &.hide-desktop
+        box-shadow: $component-box-shadow-dark
       ul
         li
           @include controls-color (dark)
           &:hover
             @include task-color (dark)
-        
+    &__instruction
+      @include controls-color (dark)
+
+    .emptyList
+      @include task-bg-color (dark)
+      @include controls-color (dark)
+      border-bottom: solid 1px $veryDarkGrayishBlue_dark2

@@ -1,14 +1,14 @@
 body, html, #root
   padding: 0
   margin: 0
-  font-family: 'Josefin Sans', sans-serif
   font-size: 18px
 
 *, *::before, *::after
   box-sizing: border-box
   padding: 0
   margin: 0
-  transition: all 1s ease-in-out
+  /* defualt app transition */
+  transition: all 0.8s ease-in-out
   font-family: 'Josefin Sans', sans-serif
 
 
@@ -16,12 +16,19 @@ body, html, #root
 #app
   @include flex-column  (flex-start, center)
   min-height: 100vh
+  height: max-content
+  overflow-y: auto
+  overflow-x: hidden
   position: relative
-
+  
 
 .hide-mobile
-  @include breakpoint-up (medium)
-    display: none
-.hide-desktop
   @include breakpoint-down (small)
     display: none
+.hide-desktop
+  @include breakpoint-up (medium)
+    display: none
+
+[draggable]
+  &, *
+    user-select: none

@@ -1,34 +1,3 @@
-@mixin taskComponentStyle ()
-  @include flex-row (flex-start,center)
-  padding: 3vw 5vw
-  border-radius: 1.5vw
-
-  @include breakpoint-up (medium)
-    padding: 1.5vw 2.5vw
-    border-radius: 0.5vw
-
-@mixin taskCheckBoxStyle ()
-  width: $input-checkBox-size
-  height: $input-checkBox-size
-  margin-right: 4vw
-  border-radius: 100px
-  border: solid 1px $input-checkBox-border-color
-
-  @include breakpoint-up (medium)
-    width: 2.5vw
-    height: 2.5vw
-    margin-right: 2vw
-
-@mixin taskTitleStyle ()
-  width: 100%
-  font-size: 3.5vw
-  font-weight: 400
-  border: none
-  outline: none
-  background-color: transparent
-
-  @include breakpoint-up (medium)
-    font-size: 1.5vw
 
 .main
   position: absolute
@@ -51,43 +20,54 @@
       font-size: 3vw
  
   &__input
-    @include taskComponentStyle
-    margin-bottom: 4.5vw
-    @include breakpoint-up (medium)
-      margin-bottom: 2.3vw
-
-    &-checkBox
-      @include taskCheckBoxStyle
+    @include task-component-styles
     &-label
       width: 80%
     &-component
-      @include taskTitleStyle
+      @include task-content-styles
+      
   &__task
     @include flex-column (center, stretch)
     border-radius: 5px
+    margin: 4.5vw 0
+    @include breakpoint-up (medium)
+      margin: 2.3vw 0
+    
     &-item
-      @include taskComponentStyle
+      @include task-component-styles
       border-radius: 0
       @include breakpoint-up (medium)
         border-radius: 0
+        &:hover .main__task-delete-btn
+          opacity: 1
       &:first-child
-        border-top-right-radius: 1.5vw
-        border-top-left-radius: 1.5vw
+        border-top-right-radius: $border-radius-size-sm
+        border-top-left-radius: $border-radius-size-sm
         @include breakpoint-up (medium)
-          border-top-right-radius: 0.5vw
-          border-top-left-radius: 0.5vw
+          border-top-right-radius: $border-radius-size-l
+          border-top-left-radius: $border-radius-size-l
+
+      &.done
+        .main__task-title
+          text-decoration: line-through
+        .main__task-btn
+          background-image: $checkBackground
+          &::before
+            background-color: transparent
+            background-image: url("../../assets/images/icon-check.svg")
+            background-size: 60%
+            background-repeat: no-repeat
+            background-position: center center
+            transition: all 0s ease-in-out
+        
     
-    &-checkBox
-      @include taskCheckBoxStyle
-      &:hover
-        border: solid 1px $brightBlue
     &-title
-      @include taskTitleStyle
-      width: 80%
+      @include task-content-styles
+      width: 83%
+ 
     &-controls
-      @include taskComponentStyle ()
+      @include task-component-styles ()
       justify-content: space-between
-      font-size: 10px
       border-radius: 0
       border-bottom-right-radius: 1.5vw
       border-bottom-left-radius: 1.5vw
@@ -96,33 +76,62 @@
         border-bottom-right-radius: 0.5vw    
         border-bottom-left-radius: 0.5vw 
         font-size: 1.3vw
+        
     &-items-left
+      @include task-controls-font-styles
     
   &__sortList
     @include breakpoint-down (small)
       width: 100%
-      margin-top: 30px
       padding: 3vw 5vw
       border-radius: 1.5vw
-
-
     ul
       list-style: none
-      @include flex-row (space-around, center)
-      @include breakpoint-up(medium)
+      @include flex-row (center, center)
       padding: 0px
       margin: 0px
       li
-        cursor: pointer      
+        @include task-controls-font-styles
+        cursor: pointer
+        font-weight: 700
         &:not(:last-child)
+          margin-right: 3.8vw
           @include breakpoint-up(medium)
             margin-right: 1.8vw
+        &.active
+          color: $brightBlue !important
+    &.hide-desktop
+      ul > li
+        font-size: 3.4vw
+
+
+
+.emptyList
+  @include task-component-styles
+  @include task-content-styles
+  text-align: center
+  justify-content: center
+  border-bottom-left-radius: 0
+  border-bottom-right-radius: 0
+  @include breakpoint-up (small)
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+
+.main__instruction
+  @include flex-row (center, center)
+  @include task-content-styles
+  margin: 11vw 0
+  font-size: 4vw
+  font-weight: 500
+
+  @include breakpoint-up (medium)
+    margin: 5vw 0
 
 
 .container
   width: 100%
   margin: auto
-  padding: 5vw
+  padding: 5vw 7vw
 
   @include breakpoint-up (medium)
-    width: 52%
+    width: 56%

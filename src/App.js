@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       inputText: "",
       darkMode: false,
+      dragSource: "",
       tasks: [
         {id: "item1", content: "Complete online JavaScript course", done: true },
         {id: "item2", content: "Jog around the park 3x", done: false },
@@ -21,14 +22,20 @@ class App extends Component {
         {id: "item6", content: "Complete Todo App on Frontent Mentor", done: false },
       ], 
       view: "all"
-    }
+    };
 
-    this.toggleTheme = this.toggleTheme.bind (this);
-    this.onChangeInput = this.onChangeInput.bind (this);
-    this.viewAll = this.viewAll.bind (this);
-    this.viewActive = this.viewActive.bind (this);
-    this.viewCompleted = this.viewCompleted.bind (this);
-    this.clearCompleted = this.clearCompleted.bind (this);
+    this.toggleTheme           = this.toggleTheme.bind (this);
+    this.onChangeInput         = this.onChangeInput.bind (this);
+    this.viewAllTask           = this.viewAllTask.bind (this);
+    this.viewActiveTasks       = this.viewActiveTasks.bind (this);
+    this.viewCompletedTasks    = this.viewCompletedTasks.bind (this);
+    this.clearCompleted        = this.clearCompleted.bind (this);
+    this.createTask            = this.createTask.bind (this);
+    this.toggleTaskStatus      = this.toggleTaskStatus.bind (this);
+    this.removeTask            = this.removeTask.bind (this)
+    this.draggingOver          = this.draggingOver.bind (this);
+    this.dragStarted           = this.dragStarted.bind (this);
+    this.dropped               = this.dropped.bind (this);
 
   }
 
@@ -37,38 +44,194 @@ class App extends Component {
     const app = document.querySelector ("#app");
 
     if (this.state.darkMode) {
+
+      /* if dark mode is on */
       app.classList.remove ("dark");
       app.classList.add ("light");
     } else {
+
+      /* if light mode is on */
       app.classList.remove ("light");
       app.classList.add ("dark");
     }
-
+    
+    /* Update app's state */
     this.setState (({darkMode}) => ({ darkMode: !darkMode }));
   }
 
-  /* Handle input */
+
+  /* Handles input component change event */
   onChangeInput (event) {
     this.setState ({inputText: event.target.value });
   }
 
-  /* Sorting list */
-  viewAll () {
+  toggleActiveState (event) {
+    event.target.parentNode.childNodes
+      .forEach (child => child.classList.remove ("active"))
+    event.target.classList.add ("active")
+  }
+
+
+  /* Update app's state to show all tasks */
+  viewAllTask (event) {
+    this.toggleActiveState (event);
+
     this.setState ({view: "all"});
   }
 
-  viewActive () {
+
+  /* Update app's state to show only active tasks */
+  viewActiveTasks (event) {
+    this.toggleActiveState (event);
+
     this.setState ({view: "active"});
   }
 
-  viewCompleted () {
+
+  /* Update app's state to show completed tasks */
+  viewCompletedTasks (event) {
+    this.toggleActiveState (event);
+
     this.setState ({view: "completed"});
   }
 
-  clearCompleted () {
+
+  /**
+   * creat a new task object
+   */
+  createTask () {
+
+    /* Create a task ID */
+    const totalTasks = this.state.tasks.length;
+    const taskId = `task${totalTasks + 1}`;
+
+    this.setState (({tasks, inputText}) => {
+
+      /* Set empty task content to display "Empty task" */
+      const taskContent = inputText === ""
+                        ? "Empty task"
+                        : inputText;
+
+      /* Update tasks */
+      const updatedTasks = tasks
+        .concat ({id: taskId
+                , content: taskContent
+                , done: false});
+
+      /* Set state */
+      return { tasks: updatedTasks };
+    });
+  }
+
+
+  /**
+   * Toggles the state of a task, set the task.done attribute
+   * to true or false
+   */
+  toggleTaskStatus (event) {
+
+    /* find index of task */
+    const index = this.state.tasks.findIndex (task =>
+      task.id === event.target.parentNode.id);
+
+    const task = this.state.tasks[index];
+
+    this.setState (state => {
+
+      /* update task object */
+      state.tasks[index] = { ...task, done: !task.done};
+
+      /* adds a css class to the parent element */
+      state.tasks[index].done
+        ? event.target.parentNode.classList.add ("done")
+        : event.target.parentNode.classList.remove ("done");
+
+      /* update state */
+      return {tasks: state.tasks};
+    });
 
   }
 
+
+  /* removes a task */
+  removeTask (event) {
+    /* removes task with id attribute */
+    const updatedTasks = this.state.tasks.filter (task =>
+      task.id !== event.target.parentNode.id);
+
+    /* update state */
+    this.setState ({tasks: updatedTasks});
+  }
+
+
+  /* clear all completed tasks */
+  clearCompleted () {
+    /* removes tasks that have been completed */
+    const updatedTasks = this.state.tasks.filter (task =>
+      !task.done);
+
+    /* update state */
+    this.setState ({tasks: updatedTasks});
+  }
+
+
+  /**
+   * Drag and drop implementation
+   * this implementation simply looks to swapping the position of
+   * the drag task and drop task in this.state.task, causing react to
+   * update the element nodes
+   */
+  dragStarted (event) {
+    //start drag
+    event.stopPropagation ();
+
+    //set data
+    event.dataTransfer.setData ("id", event.target.id);
+    // //specify allowed transfer
+    event.dataTransfer.effectAllowed = "move";
+  }
+  
+  draggingOver (event) {
+    //drag over
+    event.preventDefault();
+    event.stopPropagation();
+    
+    event.dataTransfer.dropEffect = "move";
+  }
+  
+
+  dropped (event) {
+    //drop
+    event.stopPropagation();
+    event.preventDefault();
+
+    let currentId;
+    let id = event.dataTransfer.getData ("id");
+
+    // makes sure the drop event occurs on the parent div
+    if (!event.target.id)
+      currentId = event.target.parentNode.id;
+    else currentId = event.target.id;
+
+    // find index of tasks to swap
+    let i = this.state.tasks.findIndex (t => t.id === currentId);
+    let y = this.state.tasks.findIndex (t => t.id === id);
+
+    const x = this.state.tasks[i];
+    const z = this.state.tasks[y];
+
+    
+    this.setState (state => {
+      // swap task data
+      state.tasks[i] = z;
+      state.tasks[y] = x;
+
+      // update date
+      return {tasks: state.tasks}
+    });
+  }
+  
+  
   render () {
     return (
       <div id="app" className={this.state.darkMode ? "dark" : "light"}>
@@ -81,15 +244,37 @@ class App extends Component {
           inputText={this.state.inputText}
           tasks={this.state.tasks}
           view={this.state.view}
-          viewAll={this.viewAll}
-          viewActive={this.viewActive}
-          viewCompleted={this.viewCompleted}
-          clearCompleted={this.clearCompleted} />
+          viewAllTask={this.viewAllTask}
+          viewActiveTasks={this.viewActiveTasks}
+          viewCompletedTasks={this.viewCompletedTasks}
+          clearCompleted={this.clearCompleted}
+          createTask={this.createTask}
+          toggleTaskStatus={this.toggleTaskStatus}
+          removeTask={this.removeTask}
+          draggingOver={this.draggingOver}
+          dragStarted={this.dragStarted}
+          dropped={this.dropped} />
+
       </div>
     );
   }
 
+
   componentDidMount () {
+    const taskInput = document.querySelector (".main__input-component");
+
+    /* Set focus on input component */
+    taskInput.focus ();
+
+    /* create tasks by pressing enter button */
+    taskInput.addEventListener ("keypress", (event) => {
+     if (event.key === "Enter") {
+       this.createTask ();
+
+       /* Update input element to show an empty string */
+       this.setState ({inputText: ""});
+     }  
+   });
 
   }
 }
