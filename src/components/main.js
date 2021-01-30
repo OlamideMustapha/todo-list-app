@@ -47,12 +47,12 @@ const TaskControlComponent = (props) => {
 
 
 
+const EmptyList = (props) => <div className="main__task-empty">{props.value}</div>;
 
 const TaskList = (props) => {
   const view = props.view;
   const tasks = props.tasks;
 
-  const EmptyList = (props) => <div className="emptyList">{props.value}</div>;
 
   /* adds a css class to tasks that are completed before rendering */
   const task = task =>

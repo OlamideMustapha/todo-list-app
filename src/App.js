@@ -5,6 +5,8 @@ import Main from "./components/main.js";
 import Header from "./components/header.js";
 
 
+
+
 class App extends Component {
   constructor () {
     super ();
@@ -24,19 +26,36 @@ class App extends Component {
       view: "all"
     };
 
-    this.toggleTheme           = this.toggleTheme.bind (this);
-    this.onChangeInput         = this.onChangeInput.bind (this);
-    this.viewAllTask           = this.viewAllTask.bind (this);
-    this.viewActiveTasks       = this.viewActiveTasks.bind (this);
-    this.viewCompletedTasks    = this.viewCompletedTasks.bind (this);
-    this.clearCompleted        = this.clearCompleted.bind (this);
-    this.createTask            = this.createTask.bind (this);
-    this.toggleTaskStatus      = this.toggleTaskStatus.bind (this);
-    this.removeTask            = this.removeTask.bind (this)
-    this.draggingOver          = this.draggingOver.bind (this);
-    this.dragStarted           = this.dragStarted.bind (this);
-    this.dropped               = this.dropped.bind (this);
+    this.toggleTheme        = this.toggleTheme.bind (this);
+    this.onChangeInput      = this.onChangeInput.bind (this);
+    this.viewAllTask        = this.viewAllTask.bind (this);
+    this.viewActiveTasks    = this.viewActiveTasks.bind (this);
+    this.viewCompletedTasks = this.viewCompletedTasks.bind (this);
+    this.clearCompleted     = this.clearCompleted.bind (this);
+    this.createTask         = this.createTask.bind (this);
+    this.toggleTaskStatus   = this.toggleTaskStatus.bind (this);
+    this.removeTask         = this.removeTask.bind (this)
+    this.draggingOver       = this.draggingOver.bind (this);
+    this.dragStarted        = this.dragStarted.bind (this);
+    this.dropped            = this.dropped.bind (this);
+    this.retrieveState      = this.retrieveState.bind (this);
+    this.storeState         = this.storeState.bind (this);
+    this.generateID         = this.generateID.bind (this);
 
+  }
+
+
+  /* app's states are store in the local storage */
+
+  retrieveState () {
+    if (window.localStorage["LCGFZZHHMURKBVDWZ__TODO-APP"])
+      this.setState ({ ...JSON.parse (window.localStorage.getItem ("LCGFZZHHMURKBVDWZ__TODO-APP")) });
+
+  }
+
+  storeState () {
+    /* Storing state */
+    window.localStorage.setItem ("LCGFZZHHMURKBVDWZ__TODO-APP", JSON.stringify (this.state));
   }
 
   /* handles toggle theme button */
@@ -62,7 +81,10 @@ class App extends Component {
 
   /* Handles input component change event */
   onChangeInput (event) {
-    this.setState ({inputText: event.target.value });
+    this.setState (({inputText}) => {
+
+    return {inputText: event.target.value }
+    });
   }
 
   toggleActiveState (event) {
@@ -97,13 +119,36 @@ class App extends Component {
 
 
   /**
+   * Generate a random unique ID for each new task
+   */
+  generateID () {
+    const randomID = () => {
+
+      let value = "";
+      for (let i = 0; i <= 10 ; i++) {
+        let x = Math.floor (Math.random () * (90 - 65 + 1)) + 65;
+        value = value.concat (String.fromCharCode (x));
+      }
+      return value
+    }
+
+    let id = randomID ();
+    let idExist = this.state.tasks.find (task => task.id === id);
+    while (idExist)
+      id = randomID ();
+  
+
+    return id;
+  }
+
+
+  /**
    * creat a new task object
    */
   createTask () {
 
     /* Create a task ID */
-    const totalTasks = this.state.tasks.length;
-    const taskId = `task${totalTasks + 1}`;
+    const taskId = this.generateID ();
 
     this.setState (({tasks, inputText}) => {
 
@@ -119,7 +164,7 @@ class App extends Component {
                 , done: false});
 
       /* Set state */
-      return { tasks: updatedTasks };
+      return { tasks: updatedTasks , inputText: ""};
     });
   }
 
@@ -233,6 +278,7 @@ class App extends Component {
   
   
   render () {
+
     return (
       <div id="app" className={this.state.darkMode ? "dark" : "light"}>
         <Header />
@@ -261,8 +307,10 @@ class App extends Component {
 
 
   componentDidMount () {
-    const taskInput = document.querySelector (".main__input-component");
+    
+    this.retrieveState ();
 
+    const taskInput = document.querySelector (".main__input-component");
     /* Set focus on input component */
     taskInput.focus ();
 
@@ -275,7 +323,10 @@ class App extends Component {
        this.setState ({inputText: ""});
      }  
    });
+  }
 
+  componentDidUpdate () {
+    this.storeState ();
   }
 }
 

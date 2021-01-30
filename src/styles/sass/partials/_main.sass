@@ -33,6 +33,21 @@
     @include breakpoint-up (medium)
       margin: 2.3vw 0
     
+    &-empty
+      @include task-content-styles
+      @include task-component-styles
+      padding: 3.9vw 5vw
+      @include breakpoint-up (medium)
+        padding: 2vw 2.5vw
+      text-align: center
+      justify-content: center
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+      @include breakpoint-up (small)
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+      
+
     &-item
       @include task-component-styles
       border-radius: 0
@@ -67,6 +82,9 @@
  
     &-controls
       @include task-component-styles ()
+      padding: 3.9vw 5vw
+      @include breakpoint-up (medium)
+        padding: 2vw 2.5vw
       justify-content: space-between
       border-radius: 0
       border-bottom-right-radius: 1.5vw
@@ -104,28 +122,15 @@
       ul > li
         font-size: 3.4vw
 
+  &__instruction
+    @include flex-row (center, center)
+    @include task-content-styles
+    margin: 11vw 0
+    font-size: 4vw
+    font-weight: 500
 
-
-.emptyList
-  @include task-component-styles
-  @include task-content-styles
-  text-align: center
-  justify-content: center
-  border-bottom-left-radius: 0
-  border-bottom-right-radius: 0
-  @include breakpoint-up (small)
-    border-bottom-left-radius: 0
-    border-bottom-right-radius: 0
-
-.main__instruction
-  @include flex-row (center, center)
-  @include task-content-styles
-  margin: 11vw 0
-  font-size: 4vw
-  font-weight: 500
-
-  @include breakpoint-up (medium)
-    margin: 5vw 0
+    @include breakpoint-up (medium)
+      margin: 5vw 0
 
 
 .container

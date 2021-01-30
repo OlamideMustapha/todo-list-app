@@ -24,7 +24,11 @@ $scroll-bar_dark: $veryDarkGrayishBlue_dark2
         &.done
           .main__task-title
             color: $lightGrayishBlue_light
-      
+      &-empty
+        @include task-bg-color (light)
+        @include controls-color (light)
+        border-bottom: solid 1px $veryLightGrayishBlue
+
       &-title
         @include task-color (light)
       &-controls
@@ -46,14 +50,6 @@ $scroll-bar_dark: $veryDarkGrayishBlue_dark2
 
     &__instruction
       @include controls-color (light)
-
-    .emptyList
-      @include task-bg-color (light)
-      @include controls-color (light)
-      border-bottom: solid 1px $veryLightGrayishBlue
-    
-
-
 
 
 .dark
@@ -78,7 +74,12 @@ $scroll-bar_dark: $veryDarkGrayishBlue_dark2
         &.done
           .main__task-title
             color: $veryDarkGrayishBlue_dark2
-          
+                
+      &-empty
+        @include task-bg-color (dark)
+        @include controls-color (dark)
+        border-bottom: solid 1px $veryDarkGrayishBlue_dark2
+
       &-title
         @include task-color (dark)
       &-controls
@@ -97,8 +98,3 @@ $scroll-bar_dark: $veryDarkGrayishBlue_dark2
             @include task-color (dark)
     &__instruction
       @include controls-color (dark)
-
-    .emptyList
-      @include task-bg-color (dark)
-      @include controls-color (dark)
-      border-bottom: solid 1px $veryDarkGrayishBlue_dark2
