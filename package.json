@@ -2,6 +2,10 @@
   "name": "todo-list-app",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Akinkunmi Mustapha",
+    "email": "akinkunmiMustapha1@gmail.com"
+  },
   "hompage": "http://OlamideMustapha.github.io/todo-list-app",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
