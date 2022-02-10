@@ -1,20 +1,20 @@
 # Frontend Mentor - Todo app
 
+This is a chanllenge created by [Frontend Mentor](https://www.frontendmentor.io). This chanllenge involves writing HTML, CSS and Javascript to develop a todo-list app. This project utilizes the browser-side local storage to create a persistent state for the todo-list app, meaning all task stored in the todo-list app will be saved on your browser.
+
 ![Design preview for the Todo app coding challenge](./design/desktop-preview.jpg)
 
-## Welcome! 👋
+### Technology
 
-Thanks for checking out this front-end coding challenge.
-
-[Frontend Mentor](https://www.frontendmentor.io) challenges allow you to improve your skills in a real-life workflow.
-
-**To do this challenge, you need a good understanding of HTML, CSS and JavaScript.**
+- JavaScript
+- HTML
+- ReactJs
+- SASS
+- CSS
 
 ## The challenge
 
-Your challenge is to build out this todo app and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+Challenge is to build out this todo app and get it looking as close to the design as possible.
 
 Your users should be able to:
 
